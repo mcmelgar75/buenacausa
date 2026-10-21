@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buena Causa | Rebeldes con Causa</title>
+  
+  <!-- Favicon SVG Embedded -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A0A0B'/><path d='M30 50 L50 20 L70 50 L50 80 Z' fill='%23FF007F'/><circle cx='50' cy='50' r='15' fill='%23E5E7EB'/><text x='50' y='57' font-size='18' font-weight='bold' text-anchor='middle' fill='%230A0A0B'>BC</text></svg>">
+
+  <!-- Fonts: Bangers, Permanent Marker, Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Outfit:wght@300;400;600;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              black: '#0A0A0B',
+              card: '#121214',
+              pink: '#FF007F',
+              pinkDark: '#E0006F',
+              silver: '#C0C0C0',
+              silverLight: '#E5E7EB',
+              silverDark: '#6B7280',
+            }
+          },
+          fontFamily: {
+            bangers: ['Bangers', 'cursive'],
+            marker: ['"Permanent Marker"', 'cursive'],
+            sans: ['Outfit', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Pop-Punk Utilities & Animations */
+    body {
+      background-color: #0A0A0B;
+      color: #E5E7EB;
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Pattern Overlays */
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(229, 231, 235, 0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Neon Glow Effect */
+    .neon-border {
+      box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(255, 0, 127, 0.2);
+    }
+
+    .neon-text-glow {
+      text-shadow: 0 0 10px rgba(255, 0, 127, 0.7);
+    }
+
+    /* Sticker effect */
+    .sticker {
+      filter: drop-shadow(3px 5px 0px rgba(0, 0, 0, 0.9));
+      transition: transform 0.2s ease-in-out;
+    }
+    .sticker:hover {
+      transform: scale(1.05) rotate(-2deg);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0A0A0B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FF007F;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body class="bg-brand-black text-brand-silverLight antialiased selection:bg-brand-pink selection:text-white">
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="fixed top-0 left-0 w-full z-40 bg-brand-black/90 backdrop-blur-md border-b border-brand-pink/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-12 h-12 bg-brand-pink rounded-xl flex items-center justify-center transform -rotate-6 group-hover:rotate-0 transition-transform border-2 border-white">
+          <span class="font-bangers text-3xl text-white tracking-wider">BC</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bangers text-2xl tracking-widest text-white leading-none">BUENA CAUSA</span>
+          <span class="font-marker text-xs text-brand-pink tracking-wide">BUENACAUSA.PE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:flex items-center gap-8 font-semibold uppercase text-sm tracking-wider">
+        <a href="#inicio" class="hover:text-brand-pink transition-colors">Inicio</a>
+        <a href="#numeros" class="hover:text-brand-pink transition-colors">Impacto</a>
+        <a href="#personajes" class="hover:text-brand-pink transition-colors">Escuadrón</a>
+        <a href="#membresias" class="hover:text-brand-pink transition-colors">Membresías</a>
+        <a href="#prensa" class="hover:text-brand-pink transition-colors">Prensa</a>
+      </div>
+
+      <!-- Header Action -->
+      <div class="hidden md:block">
+        <button onclick="openModal('NIVEL 01: GRATIS')" class="bg-brand-pink hover:bg-brand-pinkDark text-white font-bangers text-xl px-6 py-2 rounded-lg transform hover:-translate-y-0.5 border-2 border-white shadow-[4px_4px_0px_0px_rgba(229,231,235,1)] transition-all">
+          ÚNETE AL CLUB
+        </button>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" class="text-white text-2xl focus:outline-none">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden bg-brand-card border-b border-brand-pink px-4 pt-2 pb-6 space-y-3">
+      <a href="#inicio" class="block py-2 text-white font-semibold uppercase">Inicio</a>
+      <a href="#numeros" class="block py-2 text-white font-semibold uppercase">Impacto</a>
+      <a href="#personajes" class="block py-2 text-white font-semibold uppercase">Escuadrón</a>
+      <a href="#membresias" class="block py-2 text-white font-semibold uppercase">Membresías</a>
+      <a href="#prensa" class="block py-2 text-white font-semibold uppercase">Prensa</a>
+      <button onclick="openModal('NIVEL 01: GRATIS')" class="w-full bg-brand-pink text-white font-bangers text-xl py-3 rounded-lg border-2 border-white shadow-[4px_4px_0px_0px_rgba(229,231,235,1)]">
+        ÚNETE AL CLUB
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section id="inicio" class="relative pt-32 pb-20 md:pt-40 md:pb-32 bg-grid-pattern overflow-hidden">
+    <!-- Decorative Stickers in Background -->
+    <div class="absolute top-28 left-8 hidden lg:block sticker -rotate-12 opacity-80 pointer-events-none">
+      <div class="bg-white text-brand-black font-marker p-3 rounded-md border-2 border-brand-black text-sm">
+        🎸 NO BUY, ADOPT!
+      </div>
+    </div>
+    <div class="absolute bottom-12 right-12 hidden lg:block sticker rotate-12 opacity-80 pointer-events-none">
+      <div class="bg-brand-pink text-white font-bangers tracking-wider p-4 rounded-xl border-2 border-white text-xl">
+        ★ RESCUE & ROCK
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Text Column -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-block bg-brand-card border border-brand-pink/50 rounded-full px-4 py-1.5 shadow-lg">
+            <span class="text-brand-pink font-semibold text-xs sm:text-sm uppercase tracking-widest flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand-pink animate-ping"></span>
+              Movimiento de Protección Animal Sin Filtro
+            </span>
+          </div>
+
+          <h1 class="text-5xl sm:text-6xl md:text-7xl font-bangers tracking-wide leading-none text-white">
+            REBELDES CON <br />
+            <span class="text-brand-pink neon-text-glow underline decoration-brand-silver decoration-wavy">BUENA CAUSA</span>
+          </h1>
+
+          <p class="text-lg sm:text-xl text-brand-silver font-light max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            Sin rodeos, sin victimismo. Combatimos la indiferencia y el maltrato animal con actitud, jornadas masivas de esterilización y rescate urbano directo.
+          </p>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <button onclick="openModal('Membresía Directa')" class="w-full sm:w-auto bg-brand-pink hover:bg-brand-pinkDark text-white font-bangers text-2xl px-8 py-4 rounded-xl border-2 border-white shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+              ÚNETE AL CLUB
+            </button>
+
+            <a href="#prensa" class="w-full sm:w-auto bg-brand-card hover:bg-brand-black text-brand-silverLight font-bangers text-2xl px-8 py-4 rounded-xl border-2 border-brand-silverDark hover:border-brand-pink text-center transition-all">
+              MIRA LAS NOTAS DE PRENSA
+            </a>
+          </div>
+
+          <!-- Quick Badges -->
+          <div class="pt-6 flex items-center justify-center lg:justify-start gap-6 text-brand-silverDark text-xs font-semibold uppercase tracking-wider">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-shield-cat text-brand-pink text-base"></i> 100% Transparente
+            </div>
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-bolt text-brand-pink text-base"></i> Acción Directa
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Column -->
+        <div class="lg:col-span-5 relative">
+          <!-- Frame background -->
+          <div class="absolute -inset-2 bg-gradient-to-r from-brand-pink to-brand-silver rounded-2xl transform rotate-2 blur-sm"></div>
+          
+          <div class="relative bg-brand-card border-2 border-white rounded-2xl overflow-hidden shadow-2xl">
+            <img 
+              src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=1200&q=80" 
+              alt="Perro Rebelde Buena Causa" 
+              class="w-full h-[420px] object-cover object-center transform hover:scale-105 transition-transform duration-500"
+              onerror="this.onerror=null; this.src='https://placehold.co/800x800/121214/FF007F?text=Buena+Causa+Rebelde';"
+            />
+            
+            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-black via-brand-black/70 to-transparent p-6">
+              <div class="font-marker text-brand-pink text-lg">#RebeldesConCausa</div>
+              <p class="text-xs text-brand-silver">Cambiando el destino de miles de peludos en todo el Perú.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NUESTROS NÚMEROS ================= -->
+  <section id="numeros" class="py-16 bg-brand-card border-y border-brand-pink/20 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl sm:text-5xl font-bangers tracking-wider text-white">NUESTROS NÚMEROS</h2>
+        <p class="text-brand-silver font-light">Impacto real generado en las calles, sin excusas.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Stat 1 -->
+        <div class="bg-brand-black border-2 border-brand-pink/40 p-8 rounded-2xl text-center relative overflow-hidden group hover:border-brand-pink transition-all">
+          <div class="absolute top-0 right-0 p-4 text-brand-pink/10 group-hover:text-brand-pink/20 transition-colors">
+            <i class="fa-solid fa-syringe text-7xl"></i>
+          </div>
+          <div class="font-bangers text-6xl text-brand-pink mb-2">12,500+</div>
+          <div class="font-bold text-xl text-white uppercase tracking-wider mb-1">Esterilizaciones</div>
+          <p class="text-sm text-brand-silverDark">Frenando la sobrepoblación y el abandono desde la raíz.</p>
+        </div>
+
+        <!-- Stat 2 -->
+        <div class="bg-brand-black border-2 border-brand-pink/40 p-8 rounded-2xl text-center relative overflow-hidden group hover:border-brand-pink transition-all">
+          <div class="absolute top-0 right-0 p-4 text-brand-pink/10 group-hover:text-brand-pink/20 transition-colors">
+            <i class="fa-solid fa-bowl-food text-7xl"></i>
+          </div>
+          <div class="font-bangers text-6xl text-white mb-2">45,000 KG</div>
+          <div class="font-bold text-xl text-brand-pink uppercase tracking-wider mb-1">Alimento Entregado</div>
+          <p class="text-sm text-brand-silverDark">Llenando pancitas en refugios y comedores comunitarios.</p>
+        </div>
+
+        <!-- Stat 3 -->
+        <div class="bg-brand-black border-2 border-brand-pink/40 p-8 rounded-2xl text-center relative overflow-hidden group hover:border-brand-pink transition-all">
+          <div class="absolute top-0 right-0 p-4 text-brand-pink/10 group-hover:text-brand-pink/20 transition-colors">
+            <i class="fa-solid fa-house-chimney-medical text-7xl"></i>
+          </div>
+          <div class="font-bangers text-6xl text-brand-pink mb-2">85+</div>
+          <div class="font-bold text-xl text-white uppercase tracking-wider mb-1">Albergues Respaldados</div>
+          <p class="text-sm text-brand-silverDark">Soporte médico, infraestructura y alimento continuo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PERSONAJES ILUSTRADOS (SVG) ================= -->
+  <section id="personajes" class="py-20 bg-brand-black relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16">
+        <span class="font-marker text-brand-pink text-xl">LÍDERES DEL MANIFIESTO</span>
+        <h2 class="text-4xl sm:text-6xl font-bangers tracking-wider text-white mt-1">EL ESCUADRÓN ROCKER</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        <!-- Personaje 1: Pastor Alemán Rocker -->
+        <div class="bg-brand-card border-2 border-brand-pink p-8 rounded-3xl relative flex flex-col items-center text-center shadow-[8px_8px_0px_0px_rgba(255,0,127,0.3)]">
+          <div class="w-full h-64 flex items-center justify-center mb-6">
+            <!-- SVG Pastor Alemán Rocker -->
+            <svg viewBox="0 0 200 200" class="w-56 h-56 filter drop-shadow-lg">
+              <!-- Cabeza y Orejas -->
+              <polygon points="40,20 70,80 30,90" fill="#8B4513" />
+              <polygon points="160,20 130,80 170,90" fill="#8B4513" />
+              <polygon points="48,30 68,75 38,82" fill="#D2691E" />
+              <polygon points="152,30 132,75 162,82" fill="#D2691E" />
+              <path d="M50 80 Q100 50 150 80 L160 140 Q100 180 40 140 Z" fill="#D2691E" />
+              <!-- Hocico -->
+              <path d="M75 110 Q100 95 125 110 L120 155 Q100 165 80 155 Z" fill="#1C1C1C" />
+              <ellipse cx="100" cy="120" rx="12" ry="8" fill="#000" />
+              <!-- Gafas de Sol Punk -->
+              <rect x="55" y="85" width="40" height="22" rx="4" fill="#0A0A0B" stroke="#E5E7EB" stroke-width="3"/>
+              <rect x="105" y="85" width="40" height="22" rx="4" fill="#0A0A0B" stroke="#E5E7EB" stroke-width="3"/>
+              <line x1="95" y1="95" x2="105" y2="95" stroke="#E5E7EB" stroke-width="4" />
+              <!-- Chaleco 'BC' con Tachas -->
+              <path d="M45 145 L155 145 L165 195 L35 195 Z" fill="#111" stroke="#FF007F" stroke-width="3" />
+              <!-- Parche BC -->
+              <rect x="80" y="155" width="40" height="25" fill="#FF007F" rx="4" />
+              <text x="100" y="173" font-family="Bangers" font-size="18" fill="#FFF" text-anchor="middle">BC</text>
+              <!-- Tachas de Metal -->
+              <circle cx="55" cy="155" r="3" fill="#C0C0C0" />
+              <circle cx="65" cy="155" r="3" fill="#C0C0C0" />
+              <circle cx="135" cy="155" r="3" fill="#C0C0C0" />
+              <circle cx="145" cy="155" r="3" fill="#C0C0C0" />
+            </svg>
+          </div>
+          <div class="bg-brand-pink text-white font-bangers text-lg px-4 py-1 rounded-full mb-3">EL CAPITÁN REX</div>
+          <h3 class="text-3xl font-bangers text-white mb-2">PASTOR ALEMÁN ROCKER</h3>
+          <p class="text-brand-silver text-sm leading-relaxed">
+            Líder del frente de rescate. Vestido con su infaltable chaleco con tachas 'BC', se encarga de patrullar y coordinar las acciones directas en la calle.
+          </p>
+        </div>
+
+        <!-- Personaje 2: Border Collie Punk -->
+        <div class="bg-brand-card border-2 border-brand-silver p-8 rounded-3xl relative flex flex-col items-center text-center shadow-[8px_8px_0px_0px_rgba(192,192,192,0.3)]">
+          <div class="w-full h-64 flex items-center justify-center mb-6">
+            <!-- SVG Border Collie Punk -->
+            <svg viewBox="0 0 200 200" class="w-56 h-56 filter drop-shadow-lg">
+              <!-- Pelaje y Cabeza (Blanco y Negro) -->
+              <path d="M40 30 Q100 10 160 30 L170 120 Q100 170 30 120 Z" fill="#121214" />
+              <path d="M75 50 Q100 30 125 50 L130 130 Q100 160 70 130 Z" fill="#E5E7EB" />
+              <!-- Orejas caídas características -->
+              <path d="M30 30 C10 40 10 80 40 80 Z" fill="#121214" />
+              <path d="M170 30 C190 40 190 80 160 80 Z" fill="#121214" />
+              <!-- Ojos Puns / Maquillaje -->
+              <circle cx="75" cy="80" r="8" fill="#FF007F" />
+              <circle cx="125" cy="80" r="8" fill="#FF007F" />
+              <circle cx="75" cy="80" r="4" fill="#000" />
+              <circle cx="125" cy="80" r="4" fill="#000" />
+              <!-- Nariz -->
+              <polygon points="92,95 108,95 100,105" fill="#000" />
+              <!-- Peinado Mohawk / Cresta Neón -->
+              <path d="M85 25 L100 0 L115 25 Z" fill="#FF007F" />
+              <path d="M95 30 L105 5 L115 30 Z" fill="#E0006F" />
+              <!-- Falda / Cuadros Tartán Punk -->
+              <path d="M40 145 L160 145 L175 195 L25 195 Z" fill="#E0006F" />
+              <line x1="60" y1="145" x2="45" y2="195" stroke="#000" stroke-width="4" />
+              <line x1="100" y1="145" x2="100" y2="195" stroke="#000" stroke-width="4" />
+              <line x1="140" y1="145" x2="155" y2="195" stroke="#000" stroke-width="4" />
+              <line x1="30" y1="170" x2="170" y2="170" stroke="#000" stroke-width="4" />
+            </svg>
+          </div>
+          <div class="bg-brand-silver text-brand-black font-bangers text-lg px-4 py-1 rounded-full mb-3">ROXIE THE PUNK</div>
+          <h3 class="text-3xl font-bangers text-white mb-2">BORDER COLLIE PUNK</h3>
+          <p class="text-brand-silver text-sm leading-relaxed">
+            Estratega de concientización social y adopciones. Luciendo su falda de cuadros e inconfundible actitud, no tolera el abandono bajo ningún motivo.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECCIÓN MEMBRESÍAS 'ÚNETE AL CLUB' ================= -->
+  <section id="membresias" class="py-20 bg-brand-card relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center mb-16">
+        <span class="font-marker text-brand-pink text-xl">HAZTE SOCIO DEL MOVIMIENTO</span>
+        <h2 class="text-5xl sm:text-6xl font-bangers tracking-wider text-white">ÚNETE AL CLUB</h2>
+        <p class="text-brand-silver max-w-xl mx-auto mt-2">
+          Selecciona tu nivel de alianza. Cada aporte financia de manera directa alimento, medicina y esterilizaciones.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- NIVEL 01: GRATIS -->
+        <div class="bg-brand-black border-2 border-brand-silverDark rounded-3xl p-8 flex flex-col justify-between hover:border-brand-silver transition-all">
+          <div>
+            <div class="text-xs font-bold text-brand-silverDark uppercase tracking-widest mb-2">ENTRADA LIBRE</div>
+            <h3 class="text-3xl font-bangers text-white mb-4">NIVEL 01</h3>
+            <div class="text-4xl font-bangers text-white mb-6">GRATIS</div>
+
+            <ul class="space-y-4 text-sm text-brand-silver mb-8">
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Mailing list & novedades
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Información general de rescates
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Badge digital de simpatizante
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Invitaciones a eventos abiertos
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Reporte mensual de impacto
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openModal('NIVEL 01: GRATIS')" class="w-full bg-brand-card hover:bg-brand-silverDark text-white font-bangers text-xl py-3 rounded-xl border border-brand-silver transition-all">
+            ÚNETE AL CLUB
+          </button>
+        </div>
+
+        <!-- NIVEL 02: S/20 /mes -->
+        <div class="bg-brand-black border-2 border-brand-pink rounded-3xl p-8 flex flex-col justify-between relative shadow-[0_0_20px_rgba(255,0,127,0.2)]">
+          <div>
+            <div class="text-xs font-bold text-brand-pink uppercase tracking-widest mb-2">APOYO RECURRENTE</div>
+            <h3 class="text-3xl font-bangers text-white mb-4">NIVEL 02</h3>
+            <div class="text-4xl font-bangers text-brand-pink mb-6">S/20 <span class="text-lg text-brand-silver font-sans">/ mes</span></div>
+
+            <ul class="space-y-4 text-sm text-brand-silver mb-8">
+              <li class="flex items-center gap-3 text-white font-semibold">
+                <i class="fa-solid fa-star text-brand-pink"></i> Todo lo del Nivel 01
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Sticker pack físico oficial BC
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Acceso a eventos y jornadas exclusivas
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-check text-brand-pink"></i> Descuentos con marcas aliadas
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openModal('NIVEL 02: S/20 /mes')" class="w-full bg-brand-pink hover:bg-brand-pinkDark text-white font-bangers text-xl py-3 rounded-xl border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all">
+            ÚNETE AL CLUB
+          </button>
+        </div>
+
+        <!-- NIVEL 03: S/200 /año (POPULAR) -->
+        <div class="bg-brand-black border-2 border-white rounded-3xl p-8 flex flex-col justify-between relative shadow-[8px_8px_0px_0px_rgba(255,0,127,1)]">
+          <!-- Insignia POPULAR -->
+          <div class="absolute -top-4 right-6 bg-brand-pink text-white font-bangers text-sm px-4 py-1 rounded-full border border-white tracking-widest">
+            EL MÁS POPULAR ★
+          </div>
+
+          <div>
+            <div class="text-xs font-bold text-brand-silver uppercase tracking-widest mb-2">SOCIO VIP PATRONO</div>
+            <h3 class="text-3xl font-bangers text-white mb-4">NIVEL 03</h3>
+            <div class="text-4xl font-bangers text-white mb-6">S/200 <span class="text-lg text-brand-silver font-sans">/ año</span></div>
+
+            <ul class="space-y-4 text-sm text-brand-silver mb-8">
+              <li class="flex items-center gap-3 text-white font-semibold">
+                <i class="fa-solid fa-star text-brand-pink"></i> Todo lo del Nivel 02
+              </li>
+              <li class="flex items-center gap-3 text-white font-bold">
+                <i class="fa-solid fa-notes-medical text-brand-pink"></i> Patrocina la esterilización de un perrito
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-shirt text-brand-pink"></i> Polo oficial edición especial BC
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-heart text-brand-pink"></i> Mención de agradecimiento en redes
+              </li>
+              <li class="flex items-center gap-3">
+                <i class="fa-solid fa-location-dot text-brand-pink"></i> Visitas guiadas a albergues aliados
+              </li>
+            </ul>
+          </div>
+
+          <button onclick="openModal('NIVEL 03: S/200 /año')" class="w-full bg-white hover:bg-brand-silverLight text-brand-black font-bangers text-xl py-3 rounded-xl border-2 border-brand-black transition-all">
+            ÚNETE AL CLUB
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NOTAS DE PRENSA ================= -->
+  <section id="prensa" class="py-20 bg-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        <div>
+          <span class="font-marker text-brand-pink text-xl">EN LOS MEDIOS</span>
+          <h2 class="text-4xl sm:text-5xl font-bangers tracking-wider text-white">NOTAS DE PRENSA</h2>
+        </div>
+        <p class="text-brand-silverDark text-sm max-w-md mt-2 md:mt-0">
+          Revisa nuestras últimas apariciones y comunicados oficiales en medios de comunicación.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <article class="bg-brand-card border border-brand-pink/30 rounded-2xl overflow-hidden hover:border-brand-pink transition-all group">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=800&q=80" alt="Noticia 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-brand-black/80 backdrop-blur-md text-brand-pink font-bold text-xs px-3 py-1 rounded-full border border-brand-pink/40">JORNADAS PERÚ</span>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-brand-silverDark mb-2">18 OCTUBRE, 2026</div>
+            <h3 class="font-bangers text-2xl text-white mb-2 leading-snug group-hover:text-brand-pink transition-colors">
+              Gran Megajornada de Esterilización Gratuita beneficia a más de 500 mascotas
+            </h3>
+            <p class="text-brand-silver text-sm line-clamp-3">
+              Buena Causa desplegó su equipo médico en zonas vulnerables para frenar la sobrepoblación y promover la tenencia responsable.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-brand-card border border-brand-pink/30 rounded-2xl overflow-hidden hover:border-brand-pink transition-all group">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80" alt="Noticia 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-brand-black/80 backdrop-blur-md text-brand-silver font-bold text-xs px-3 py-1 rounded-full border border-brand-silver/40">CAMPAÑAS</span>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-brand-silverDark mb-2">02 OCTUBRE, 2026</div>
+            <h3 class="font-bangers text-2xl text-white mb-2 leading-snug group-hover:text-brand-pink transition-colors">
+              Alianza estratégica con marcas urbanas para llevar alimento a 30 albergues
+            </h3>
+            <p class="text-brand-silver text-sm line-clamp-3">
+              Gracias al apoyo de la comunidad y marcas del sector privado, se recolectaron más de 10 toneladas de alimento balanceado.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bg-brand-card border border-brand-pink/30 rounded-2xl overflow-hidden hover:border-brand-pink transition-all group">
+          <div class="h-48 overflow-hidden relative">
+            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=80" alt="Noticia 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <span class="absolute top-3 left-3 bg-brand-black/80 backdrop-blur-md text-brand-pink font-bold text-xs px-3 py-1 rounded-full border border-brand-pink/40">CULTURA</span>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-brand-silverDark mb-2">15 SEPTIEMBRE, 2026</div>
+            <h3 class="font-bangers text-2xl text-white mb-2 leading-snug group-hover:text-brand-pink transition-colors">
+              Estética Pop-Punk y Protección Animal: La propuesta disruptiva de Buena Causa
+            </h3>
+            <p class="text-brand-silver text-sm line-clamp-3">
+              Un recorrido por cómo el diseño, la música y la juventud están transformando el voluntariado tradicional en Perú.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-brand-card border-t border-brand-pink/30 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-brand-pink/10">
+        
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-pink rounded-lg flex items-center justify-center font-bangers text-2xl text-white">BC</div>
+            <span class="font-bangers text-2xl text-white tracking-widest">BUENA CAUSA</span>
+          </div>
+          <p class="text-xs text-brand-silver leading-relaxed">
+            Organización sin fines de lucro dedicada al rescate, esterilización y bienestar animal en el Perú con actitud y transparencia.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bangers text-lg text-white mb-4 tracking-wider">NAVEGACIÓN</h4>
+          <ul class="space-y-2 text-xs text-brand-silver">
+            <li><a href="#inicio" class="hover:text-brand-pink transition-colors">Inicio</a></li>
+            <li><a href="#numeros" class="hover:text-brand-pink transition-colors">Nuestros Números</a></li>
+            <li><a href="#personajes" class="hover:text-brand-pink transition-colors">Personajes</a></li>
+            <li><a href="#membresias" class="hover:text-brand-pink transition-colors">Membresías</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bangers text-lg text-white mb-4 tracking-wider">LEGAL & TRANSPARENCIA</h4>
+          <ul class="space-y-2 text-xs text-brand-silver">
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Términos y Condiciones</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Política de Privacidad</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Rendición de Cuentas</a></li>
+            <li><a href="#" class="hover:text-brand-pink transition-colors">Libro de Reclamaciones</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bangers text-lg text-white mb-4 tracking-wider">REDES SOCIALES</h4>
+          <div class="flex gap-4 text-xl">
+            <a href="#" class="w-10 h-10 rounded-lg bg-brand-black border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <i class="fa-brands fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-lg bg-brand-black border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-lg bg-brand-black border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <i class="fa-brands fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 text-center text-xs text-brand-silverDark flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>© 2026 Buena Causa (www.buenacausa.pe). Todos los derechos reservados.</div>
+        <div class="font-marker text-brand-pink">HECHO CON ACTITUD REBELDE EN PERÚ</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODAL INTERACTIVO DE INSCRIPCIÓN ================= -->
+  <div id="joinModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div class="bg-brand-card border-2 border-brand-pink w-full max-w-md rounded-3xl p-6 sm:p-8 relative shadow-[0_0_30px_rgba(255,0,127,0.5)]">
+      
+      <!-- Close button -->
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-brand-silver hover:text-white text-2xl focus:outline-none">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="inline-block bg-brand-pink text-white font-bangers text-xs px-3 py-1 rounded-full mb-2 uppercase">
+          ÚNETE AL MOVIMIENTO
+        </div>
+        <h3 id="modalPlanTitle" class="text-3xl font-bangers text-white">ÚNETE AL CLUB</h3>
+        <p class="text-xs text-brand-silver">Completa tus datos para confirmar tu membresía.</p>
+      </div>
+
+      <form id="joinForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase text-brand-silver mb-1">Nombre Completo</label>
+          <input type="text" required placeholder="Tu nombre o alias punk" class="w-full bg-brand-black border border-brand-pink/40 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-pink" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-brand-silver mb-1">Correo Electrónico</label>
+          <input type="email" required placeholder="tuemail@ejemplo.com" class="w-full bg-brand-black border border-brand-pink/40 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-pink" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase text-brand-silver mb-1">Teléfono / WhatsApp</label>
+          <input type="tel" required placeholder="+51 987 654 321" class="w-full bg-brand-black border border-brand-pink/40 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-pink" />
+        </div>
+
+        <button type="submit" class="w-full bg-brand-pink hover:bg-brand-pinkDark text-white font-bangers text-xl py-3 rounded-xl border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:shadow-none transition-all mt-4">
+          CONFIRMAR INSCRIPCIÓN
+        </button>
+      </form>
+
+      <!-- Feedback Success Message (hidden by default) -->
+      <div id="formSuccess" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 bg-brand-pink/20 border-2 border-brand-pink rounded-full flex items-center justify-center mx-auto text-brand-pink text-3xl">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h4 class="text-2xl font-bangers text-white">¡BIENVENIDO AL CLUB!</h4>
+        <p class="text-xs text-brand-silver leading-relaxed">
+          Hemos recibido tu solicitud. Te enviamos un correo con los detalles e instrucciones de tu bienvenida.
+        </p>
+        <button onclick="closeModal()" class="bg-brand-card border border-brand-pink text-white font-bangers px-6 py-2 rounded-xl text-lg">
+          CERRAR
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT SEGURO ================= -->
+  <script>
+    // Navigation Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Modal Operations
+    function openModal(planName) {
+      const modal = document.getElementById('joinModal');
+      const title = document.getElementById('modalPlanTitle');
+      const form = document.getElementById('joinForm');
+      const success = document.getElementById('formSuccess');
+
+      if (title && planName) {
+        title.innerText = planName;
+      }
+
+      if (form) form.classList.remove('hidden');
+      if (success) success.classList.add('hidden');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('joinModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById('joinForm');
+      const success = document.getElementById('formSuccess');
+
+      if (form && success) {
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+      }
+    }
+
+    // Close modal on click outside content
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('joinModal');
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
